@@ -21,12 +21,13 @@ The navigation exercise used a TurtleBot3 Waffle in a simulated office. After ea
 - **Engineering challenge** · Correcting wheel and drive configuration in the custom model, and reducing drift during TurtleBot3 mapping.
 - **Result** · A custom robot spawn, a saved occupancy grid and a three-room navigation run were recorded in the course. Navigation performance was evaluated qualitatively.
 
-## Screenshot Gallery
+## Course Demonstration Videos
 
-![Custom robot with simulated LiDAR](assets/screenshots/custom-robot-gazebo.png)
-![TurtleBot3 office simulation](assets/screenshots/turtlebot3-office-gazebo.png)
-![Completed occupancy grid in RViz2](assets/screenshots/turtlebot3-rviz-slam.png)
-![Nav2 costmaps and office map](assets/screenshots/turtlebot3-rviz-navigation.png)
-![Course playback capture](assets/screenshots/turtlebot3-bag-replay.png)
+| Exercise | Course recording |
+| --- | --- |
+| Custom robot | [Gazebo bringup (MP4)](assets/demos/custom-robot-gazebo-bringup.mp4) |
+| Custom robot | [RViz2 model inspection (MP4)](assets/demos/custom-robot-rviz-model-inspection.mp4) |
+| TurtleBot3 | [Office waypoint navigation (MP4)](assets/demos/turtlebot3-office-waypoint-navigation.mp4) |
+| TurtleBot3 | [Recorded topic playback (MP4)](assets/demos/turtlebot3-rosbag-playback.mp4) |
 
-[Image credits and source locations](docs/image-index.md)
+[Video source and timestamps](docs/video-index.md) · [Report screenshots](docs/image-index.md)

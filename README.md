@@ -6,6 +6,19 @@
 
 Two undergraduate Mechatronics exercises. In the first, I modeled a custom differential-drive robot with sensor plugins and built a Gazebo and RViz2 bringup package. In the second, I used a TurtleBot3 Waffle to map a simulated office, navigate through waypoints and record ROS topics for replay.
 
+## Course Demonstration Videos
+
+These MP4 excerpts come from the original course recordings. Open a video below to view or download the recording on GitHub.
+
+| Exercise | Course recording |
+| --- | --- |
+| Custom robot | [Gazebo bringup (MP4)](assets/demos/custom-robot-gazebo-bringup.mp4) |
+| Custom robot | [RViz2 model inspection (MP4)](assets/demos/custom-robot-rviz-model-inspection.mp4) |
+| TurtleBot3 | [Office waypoint navigation (MP4)](assets/demos/turtlebot3-office-waypoint-navigation.mp4) |
+| TurtleBot3 | [Recorded topic playback (MP4)](assets/demos/turtlebot3-rosbag-playback.mp4) |
+
+[Video source and timestamps](docs/video-index.md) · [Report screenshots](docs/image-index.md)
+
 ## My Role & Contributions
 
 I authored the custom robot URDF, configured its wheels, caster and sensor mounts, and wrote launch files and package configuration. For TurtleBot3, I drove the mapping passes, exported the occupancy grid, recorded goal poses in RViz2 and adapted a Nav2 Simple Commander example with an initial pose and nine waypoints. I also recorded and replayed the navigation session.
@@ -48,23 +61,6 @@ flowchart LR
 ## Challenges & Solutions
 
 The custom robot report describes correcting wheel joint references and drive parameters, adding Gazebo-compatible materials and adjusting sensor placement. Initial office mapping attempts showed gaps or drift. Slowing down and covering rooms deliberately produced the saved map, and correcting the map-saver output flag to `-f` produced the PGM/YAML pair. I then iterated on the waypoint sequence and tested playback.
-
-## Project Screenshots
-
-| Course evidence | Original capture |
-| --- | --- |
-| Custom robot in Gazebo | ![Custom robot and laser scan](assets/screenshots/custom-robot-gazebo.png) |
-| TurtleBot3 in the office | ![Office simulation with TurtleBot3 LiDAR](assets/screenshots/turtlebot3-office-gazebo.png) |
-| Completed occupancy grid | ![Office occupancy grid in RViz2](assets/screenshots/turtlebot3-rviz-slam.png) |
-| Navigation and costmaps | ![RViz2 navigation map](assets/screenshots/turtlebot3-rviz-navigation.png) |
-| Session replay | ![Gazebo and RViz2 during playback](assets/screenshots/turtlebot3-bag-replay.png) |
-
-## Original Course Recordings
-
-- Custom robot · [Gazebo bringup](assets/demos/custom-robot-gazebo-bringup.mp4) and [RViz2 model inspection](assets/demos/custom-robot-rviz-model-inspection.mp4)
-- TurtleBot3 · [Office waypoint navigation](assets/demos/turtlebot3-office-waypoint-navigation.mp4) and [rosbag playback](assets/demos/turtlebot3-rosbag-playback.mp4)
-
-See the [video index](docs/video-index.md) for provenance and edits.
 
 ## Results & Limitations
 
