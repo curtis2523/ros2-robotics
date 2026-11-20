@@ -1,0 +1,268 @@
+<?xml version="1.0"?>
+<robot name="curtis251_bot">
+
+  <!-- Materials (供RViz使用) -->
+  <material name="grey"><color rgba="0.6 0.6 0.6 1"/></material>
+  <material name="black"><color rgba="0.1 0.1 0.1 1"/></material>
+  <material name="orange"><color rgba="1.0 0.5 0.1 1"/></material>
+  <material name="blue"><color rgba="0.2 0.6 0.9 1"/></material>
+  <material name="white"><color rgba="0.95 0.95 0.95 1"/></material>
+
+  <!-- Base (cylinder Ø0.40m x H0.80m) —— 上抬使底面 z=0.075 -->
+  <link name="base">
+    <inertial>
+      <origin xyz="0 0 0.400" rpy="0 0 0"/>
+      <mass value="8.0"/>
+      <inertia ixx="0.25" iyy="0.25" izz="0.10" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.400" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.20" length="0.80"/></geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.400" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.20" length="0.80"/></geometry>
+    </collision>
+  </link>
+  <!-- Gazebo材质定义 - 基座 -->
+  <gazebo reference="base">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <!-- Wheels (Ø0.15m 厚0.04m) ：贴在侧面，绕 Y 轴转；Y 偏移 ±0.23 -->
+  <joint name="base_to_wheel_l" type="continuous">
+    <parent link="base"/>
+    <child  link="wheel_l"/>
+    <origin xyz="0  0.23 0.035" rpy="0 0 0"/>
+    <axis   xyz="0 1 0"/>
+  </joint>
+  <link name="wheel_l">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.6"/>
+      <inertia ixx="0.002" iyy="0.002" izz="0.002" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.075" length="0.04"/></geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.075" length="0.04"/></geometry>
+    </collision>
+  </link>
+  <!-- Gazebo材质定义 - 左轮 -->
+  <gazebo reference="wheel_l">
+    <mu1>1.5</mu1>
+    <mu2>1.5</mu2>
+    <kp>5e4</kp>
+    <kd>2.0</kd>
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <joint name="base_to_wheel_r" type="continuous">
+    <parent link="base"/>
+    <child  link="wheel_r"/>
+    <origin xyz="0 -0.23 0.035" rpy="0 0 0"/>
+    <axis   xyz="0 1 0"/>
+  </joint>
+  <link name="wheel_r">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.6"/>
+      <inertia ixx="0.002" iyy="0.002" izz="0.002" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.075" length="0.04"/></geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.075" length="0.04"/></geometry>
+    </collision>
+  </link>
+  <!-- Gazebo材质定义 - 右轮 -->
+  <gazebo reference="wheel_r">
+    <mu1>1.5</mu1>
+    <mu2>1.5</mu2>
+    <kp>5e4</kp>
+    <kd>2.0</kd>
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <!-- Rear caster (小球接地) -->
+  <joint name="base_to_caster" type="fixed">
+    <parent link="base"/>
+    <child  link="caster"/>
+    <origin xyz="-0.16 0 0.115" rpy="0 0 0"/>
+  </joint>
+  
+  <link name="caster">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.2"/>
+      <inertia ixx="0.0003" iyy="0.0003" izz="0.0003" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual><origin xyz="0 0 0"/><geometry><sphere radius="0.04"/></geometry><material name="white"/></visual>
+    <collision><origin xyz="0 0 0"/><geometry><sphere radius="0.04"/></geometry></collision>
+  </link>
+  <!-- Gazebo材质定义 - 万向轮 -->
+  <gazebo reference="caster">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <!-- IMU -->
+  <joint name="base_to_imu" type="fixed">
+    <parent link="base"/><child link="imu"/>
+    <origin xyz="-0.18 0 0.72" rpy="0 0 0"/>
+  </joint>
+  <link name="imu">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="1e-5" iyy="1e-5" izz="1e-5" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual><origin xyz="0 0 0"/><geometry><box size="0.05 0.05 0.02"/></geometry><material name="blue"/></visual>
+    <collision><origin xyz="0 0 0"/><geometry><box size="0.05 0.05 0.02"/></geometry></collision>
+  </link>
+  <!-- Gazebo材质定义 - IMU -->
+  <gazebo reference="imu">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <!-- Camera -->
+  <joint name="base_to_camera" type="fixed">
+    <parent link="base"/><child link="camera"/>
+    <origin xyz="0.18 0 0.65" rpy="0 0 0"/>
+  </joint>
+  <link name="camera">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.15"/>
+      <inertia ixx="2e-4" iyy="2e-4" izz="2e-4" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual><origin xyz="0 0 0"/><geometry><box size="0.08 0.06 0.06"/></geometry><material name="orange"/></visual>
+    <collision><origin xyz="0 0 0"/><geometry><box size="0.08 0.06 0.06"/></geometry></collision>
+  </link>
+  <!-- Gazebo材质定义 - 相机 -->
+  <gazebo reference="camera">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <!-- LiDAR（关节在顶面 z=0.70，传感器自身上抬 0.025m 放在顶盖上） -->
+  <joint name="base_to_lidar" type="fixed">
+    <parent link="base"/><child link="lidar"/>
+    <origin xyz="0 0 0.82" rpy="0 0 0"/>
+  </joint>
+  <link name="lidar">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="5e-5" iyy="5e-5" izz="5e-5" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.05"/></geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.05"/></geometry>
+    </collision>
+  </link>
+  <!-- Gazebo材质定义 - 激光雷达 -->
+  <gazebo reference="lidar">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <!-- ================= Gazebo plugins ================= -->
+
+  <!-- 差速驱动 -->
+  <gazebo reference="base">
+    <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+      <ros><namespace>/</namespace></ros>
+      <update_rate>50</update_rate>
+      <left_joint>base_to_wheel_l</left_joint>
+      <right_joint>base_to_wheel_r</right_joint>
+      <wheel_separation>0.36</wheel_separation>
+      <wheel_diameter>0.15</wheel_diameter>
+      <cmd_vel_topic>cmd_vel</cmd_vel_topic>
+      <odometry_topic>/odom</odometry_topic>
+      <publish_tf>true</publish_tf>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base</robot_base_frame>
+    </plugin>
+  </gazebo>
+
+  <!-- Camera -> /camera/image_raw, /camera/camera_info -->
+  <gazebo reference="camera">
+    <sensor type="camera" name="camera_sensor">
+      <always_on>true</always_on>
+      <update_rate>30</update_rate>
+      <camera>
+        <horizontal_fov>1.05</horizontal_fov>
+        <image><width>640</width><height>480</height><format>R8G8B8</format></image>
+        <clip><near>0.05</near><far>50.0</far></clip>
+      </camera>
+      <plugin name="camera_plugin" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/image_raw:=/camera/image_raw</remapping>
+          <remapping>~/camera_info:=/camera/camera_info</remapping>
+        </ros>
+        <frame_name>camera</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- IMU -> /imu -->
+  <gazebo reference="imu">
+    <sensor type="imu" name="imu_sensor">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <plugin name="imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/out:=/imu</remapping>
+        </ros>
+        <frame_name>imu</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- LiDAR -> /scan -->
+  <gazebo reference="lidar">
+    <sensor type="ray" name="lidar_sensor">
+      <always_on>true</always_on>
+      <update_rate>15</update_rate>
+      <visualize>true</visualize>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.1415926</min_angle>
+            <max_angle>3.1415926</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.12</min>
+          <max>6.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="lidar_plugin" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/out:=/scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>lidar</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>
