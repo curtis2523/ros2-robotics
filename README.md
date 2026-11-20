@@ -66,12 +66,5 @@ The custom robot report describes correcting wheel joint references and drive pa
 
 The course records show a spawned custom robot, a saved occupancy grid, a goal reached in RViz2 and a waypoint run through three rooms. Playback republishes messages, while reproducing simulated motion depends on the running nodes and simulator state. The submissions provide qualitative simulation evidence. The recordings are from the original coursework.
 
-## Course Source
-
-The [custom robot package](custom-robot) and [TurtleBot3 navigation artifacts](turtlebot3-navigation) belong to separate exercises. See the [source layout](docs/reproduction.md) for the retained files and course environment dependencies.
-
-## Course Project Background
-
-ITFM7.120 Mechatronics in IT. Week 3 covers mapping, Week 5 covers TurtleBot3 navigation and replay, and Week 7 covers custom robot modeling and bringup.
 
 [Evidence map](docs/evidence-map.md) · [Image index](docs/image-index.md) · [Portfolio copy](PORTFOLIO.md) · [Credits](docs/credits.md) · [Publication checklist](PUBLISH-CHECKLIST.md)
