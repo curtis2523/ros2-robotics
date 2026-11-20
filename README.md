@@ -1,70 +1,39 @@
 # ROS 2 Robot Simulation & Navigation
 
-![ROS 2 Robotics cover using the original custom robot capture](assets/cover.webp)
+<img src="assets/cover.webp" alt="Custom differential-drive robot in Gazebo" width="560">
 
-## Project Overview
+In two undergraduate ROS 2 Humble labs, I modeled a differential-drive robot and used a separate TurtleBot3 Waffle to map and navigate a simulated office.
 
-Two undergraduate Mechatronics exercises. In the first, I modeled a custom differential-drive robot with sensor plugins and built a Gazebo and RViz2 bringup package. In the second, I used a TurtleBot3 Waffle to map a simulated office, navigate through waypoints and record ROS topics for replay.
+## Screenshots & Demonstrations
 
-## Course Demonstration Videos
-
-These MP4 excerpts come from the original course recordings. Open a video below to view or download the recording on GitHub.
-
-| Exercise | Course recording |
+| Office occupancy grid | TurtleBot3 navigation in RViz2 |
 | --- | --- |
-| Custom robot | [Gazebo bringup (MP4)](assets/demos/custom-robot-gazebo-bringup.mp4) |
-| Custom robot | [RViz2 model inspection (MP4)](assets/demos/custom-robot-rviz-model-inspection.mp4) |
-| TurtleBot3 | [Office waypoint navigation (MP4)](assets/demos/turtlebot3-office-waypoint-navigation.mp4) |
-| TurtleBot3 | [Recorded topic playback (MP4)](assets/demos/turtlebot3-rosbag-playback.mp4) |
+| ![Office occupancy grid produced with SLAM Toolbox](assets/screenshots/turtlebot3-rviz-slam.png) | ![Office map and TurtleBot3 navigation costmaps in RViz2](assets/screenshots/turtlebot3-rviz-navigation.png) |
 
-[Video source and timestamps](docs/video-index.md) · [Report screenshots](docs/image-index.md)
+[Custom robot in Gazebo](assets/screenshots/custom-robot-gazebo.png) · [TurtleBot3 in the office](assets/screenshots/turtlebot3-office-gazebo.png) · [Bag replay](assets/screenshots/turtlebot3-bag-replay.png)
 
-## My Role & Contributions
-
-I authored the custom robot URDF, configured its wheels, caster and sensor mounts, and wrote launch files and package configuration. For TurtleBot3, I drove the mapping passes, exported the occupancy grid, recorded goal poses in RViz2 and adapted a Nav2 Simple Commander example with an initial pose and nine waypoints. I also recorded and replayed the navigation session.
+- **Custom robot videos** · [ROS 2 Robot Simulation](assets/demos/custom-robot-gazebo-bringup.mp4) · [RViz2 Model Inspection](assets/demos/custom-robot-rviz-model-inspection.mp4)
+- **TurtleBot3 videos** · [TurtleBot3 Navigation](assets/demos/turtlebot3-office-waypoint-navigation.mp4) · [rosbag Playback](assets/demos/turtlebot3-rosbag-playback.mp4)
 
 ## Tech Stack
 
-| Practice | Tools |
-| --- | --- |
-| Custom robot | ROS 2 Humble, ament_python, Python launch, URDF, Gazebo Classic, RViz2 |
-| TurtleBot3 | TurtleBot3 Waffle, Gazebo Classic, RViz2, SLAM Toolbox, Nav2, AMCL, Python and Nav2 Simple Commander |
-| Session recording | rosbag2 and SQLite |
-
-## System Architecture
-
-```mermaid
-flowchart LR
-    subgraph Custom["Custom robot bringup"]
-        U["URDF and Python launch"] --> G["Gazebo Classic plugins"]
-        U --> R["Robot state publisher and RViz2"]
-        C["cmd_vel"] --> G
-        G --> S["Camera, IMU, laser scan and odometry"]
-    end
-    subgraph Turtle["TurtleBot3 Waffle exercise"]
-        T["Gazebo office and TurtleBot3"] --> M["SLAM Toolbox"]
-        M --> O["Saved occupancy grid"]
-        O --> N["Nav2 and AMCL"]
-        W["Python waypoint client"] --> N
-        N --> T
-        T --> B["rosbag2 topic recording"]
-        N --> B
-        B --> V["Topic playback and RViz2 inspection"]
-    end
-```
+ROS 2 Humble · Python · URDF · Gazebo Classic · RViz2 · TurtleBot3 Waffle · SLAM Toolbox · Nav2 / AMCL · rosbag2
 
 ## Implementation
 
-- **Custom robot.** A cylindrical base, two wheels on continuous joints and a fixed caster form the chassis. The URDF defines sensor frames and Gazebo plugins for differential drive, camera, IMU and LiDAR. Separate launch files cover Gazebo spawning and standalone RViz2 inspection.
-- **TurtleBot3.** I used teleoperation and asynchronous SLAM to build the map. I checked a single goal in RViz2, then passed nine map-frame poses to Nav2's waypoint follower. The bag preserves TF, odometry, localization, map, scan and velocity messages.
+### Custom robot
 
-## Challenges & Solutions
+I wrote the URDF for a cylindrical chassis with two drive wheels and a fixed caster. I defined frames and Gazebo plugins for a camera, an IMU, and a LiDAR, plus a differential-drive plugin for velocity commands and odometry. I wrote separate Python launch files for spawning the robot in Gazebo and inspecting the model and transforms in RViz2.
 
-The custom robot report describes correcting wheel joint references and drive parameters, adding Gazebo-compatible materials and adjusting sensor placement. Initial office mapping attempts showed gaps or drift. Slowing down and covering rooms deliberately produced the saved map, and correcting the map-saver output flag to `-f` produced the PGM/YAML pair. I then iterated on the waypoint sequence and tested playback.
+### TurtleBot3 navigation
 
-## Results & Limitations
+I teleoperated the Waffle while SLAM Toolbox built an office occupancy grid, then exported the map as a PGM/YAML pair. I used RViz2 to place goals and adapted a Nav2 Simple Commander example with an office-map starting pose and nine waypoints. I used rosbag2 to record and replay transforms, scans, odometry, localization, map, and velocity messages.
 
-The course records show a spawned custom robot, a saved occupancy grid, a goal reached in RViz2 and a waypoint run through three rooms. Playback republishes messages, while reproducing simulated motion depends on the running nodes and simulator state. The submissions provide qualitative simulation evidence. The recordings are from the original coursework.
+## Code
 
+- [Custom robot bringup package](custom-robot/src/curtis251_bringup) · [URDF](custom-robot/src/curtis251_bringup/urdf/curtis251_robot.urdf)
+- [TurtleBot3 waypoint script](turtlebot3-navigation/follow_waypoints.py) · [Office map](turtlebot3-navigation/maps) · [Launch and navigation configuration](turtlebot3-navigation/course-config)
 
-[Evidence map](docs/evidence-map.md) · [Image index](docs/image-index.md) · [Portfolio copy](PORTFOLIO.md) · [Credits](docs/credits.md) · [Publication checklist](PUBLISH-CHECKLIST.md)
+The office launch files depend on external course scene assets.
+
+I adapted the [Nav2 Simple Commander waypoint example](https://github.com/ros-navigation/navigation2/blob/humble/nav2_simple_commander/nav2_simple_commander/example_waypoint_follower.py), originally copyrighted by Samsung Research America. The TurtleBot3 launch files retain their ROBOTIS and Open Source Robotics Foundation notices. [Apache 2.0 license text](turtlebot3-navigation/LICENSE-APACHE-2.0.txt)
