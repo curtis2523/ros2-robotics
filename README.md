@@ -12,8 +12,8 @@ In two undergraduate ROS 2 Humble labs, I modeled a differential-drive robot and
 
 [Custom robot in Gazebo](assets/screenshots/custom-robot-gazebo.png) · [TurtleBot3 in the office](assets/screenshots/turtlebot3-office-gazebo.png) · [Bag replay](assets/screenshots/turtlebot3-bag-replay.png)
 
-- **Custom robot recordings** · [Gazebo bringup](assets/demos/custom-robot-gazebo-bringup.mp4) · [RViz2 model inspection](assets/demos/custom-robot-rviz-model-inspection.mp4)
-- **TurtleBot3 recordings** · [Office waypoint navigation](assets/demos/turtlebot3-office-waypoint-navigation.mp4) · [rosbag playback](assets/demos/turtlebot3-rosbag-playback.mp4)
+- **Custom robot videos** · [ROS 2 Robot Simulation](assets/demos/custom-robot-gazebo-bringup.mp4) · [RViz2 Model Inspection](assets/demos/custom-robot-rviz-model-inspection.mp4)
+- **TurtleBot3 videos** · [TurtleBot3 Navigation](assets/demos/turtlebot3-office-waypoint-navigation.mp4) · [rosbag Playback](assets/demos/turtlebot3-rosbag-playback.mp4)
 
 ## Tech Stack
 
@@ -29,10 +29,10 @@ I wrote the URDF for a cylindrical chassis with two drive wheels and a fixed cas
 
 I teleoperated the Waffle while SLAM Toolbox built an office occupancy grid, then exported the map as a PGM/YAML pair. I used RViz2 to place goals and adapted a Nav2 Simple Commander example with an office-map starting pose and nine waypoints. I used rosbag2 to record and replay transforms, scans, odometry, localization, map, and velocity messages.
 
-## Source Code
+## Code
 
 - [Custom robot bringup package](custom-robot/src/curtis251_bringup) · [URDF](custom-robot/src/curtis251_bringup/urdf/curtis251_robot.urdf)
-- [TurtleBot3 waypoint script](turtlebot3-navigation/follow_waypoints.py) · [Office map](turtlebot3-navigation/maps) · [Course launch and configuration files](turtlebot3-navigation/course-config)
+- [TurtleBot3 waypoint script](turtlebot3-navigation/follow_waypoints.py) · [Office map](turtlebot3-navigation/maps) · [Launch and navigation configuration](turtlebot3-navigation/course-config)
 
 The office launch files depend on external course scene assets.
 
